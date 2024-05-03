@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Agent app">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <longProp name="ThreadGroup.duration">10</longProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.scheduler">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <intProp name="LoopController.loops">-1</intProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Content-type</stringProp>
+              <stringProp name="Header.value">application/json</stringProp>
+            </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Authorization</stringProp>
+              <stringProp name="Header.value">Token 0a353dd7b793d0f0be9fe80f56d7be9c81d8b188</stringProp>
+            </elementProp>
+          </collectionProp>
+        </HeaderManager>
+        <hashTree/>
+        <ConstantThroughputTimer guiclass="TestBeanGUI" testclass="ConstantThroughputTimer" testname="Constant Throughput Timer">
+          <intProp name="calcMode">0</intProp>
+          <doubleProp>
+            <name>throughput</name>
+            <value>80.0</value>
+            <savedValue>0.0</savedValue>
+          </doubleProp>
+        </ConstantThroughputTimer>
+        <hashTree/>
+        <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor">
+          <stringProp name="JSONPostProcessor.referenceNames">auth_token</stringProp>
+          <stringProp name="JSONPostProcessor.jsonPathExprs">$.token</stringProp>
+          <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          <stringProp name="JSONPostProcessor.defaultValues">null</stringProp>
+        </JSONPostProcessor>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Авторизация">
+          <stringProp name="HTTPSampler.domain">partner.agentapp.ru</stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/users/obtain-token</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;username&quot;: &quot;qa@qa.qa&quot;,&#xd;
+    &quot;password&quot;: &quot;111&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Создание водителя">
+          <stringProp name="HTTPSampler.domain">partner.agentapp.ru</stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/insured_objects/drivers</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;first_name&quot;: &quot;Василий&quot;,&#xd;
+    &quot;last_name&quot;: &quot;Пупкин&quot;,&#xd;
+    &quot;patronymic&quot;: &quot;Иванович&quot;,&#xd;
+    &quot;birth_date&quot;: &quot;1992-02-14&quot;,&#xd;
+    &quot;driving_experience_started&quot;: &quot;2018-06-25&quot;,&#xd;
+    &quot;driver_licenses&quot;: [&#xd;
+        {&#xd;
+            &quot;credential_type&quot;: &quot;DRIVER_LICENSE&quot;,&#xd;
+            &quot;number&quot;: &quot;619605&quot;,&#xd;
+            &quot;series&quot;: &quot;7031&quot;,&#xd;
+            &quot;issue_date&quot;: &quot;2018-06-25&quot;&#xd;
+        }&#xd;
+    ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Создание автомобиля">
+          <stringProp name="HTTPSampler.domain">partner.agentapp.ru</stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/insured_objects/cars</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;car_model_id&quot;: 261020578, &#xd;
+  &quot;engine_power&quot;: 110,&#xd;
+  &quot;vin_number&quot;: &quot;SJNFCAE11U1230880&quot;,&#xd;
+  &quot;number_plate&quot;: &quot;P617EC70&quot;,&#xd;
+  &quot;manufacturing_year&quot;: 2007,&#xd;
+  &quot;max_mass&quot;: null,&#xd;
+  &quot;has_trailer&quot;: false,&#xd;
+  &quot;credential&quot;: [&#xd;
+    {&#xd;
+      &quot;credential_type&quot;: &quot;VEHICLE_REGISTRATION&quot;,&#xd;
+      &quot;issue_date&quot;: &quot;2010-11-01&quot;,&#xd;
+      &quot;number&quot;: &quot;204326&quot;,&#xd;
+      &quot;series&quot;: &quot;70PM&quot;&#xd;
+    }&#xd;
+  ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Создание собственника">
+          <stringProp name="HTTPSampler.domain">partner.agentapp.ru</stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/insured_objects/owners/natural_persons</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;last_name&quot;: &quot;Гурбановская&quot;,&#xd;
+  &quot;first_name&quot;: &quot;Леся&quot;,&#xd;
+  &quot;patronymic&quot;: &quot;Богдановна&quot;,&#xd;
+  &quot;birth_date&quot;: &quot;1976-06-15&quot;,&#xd;
+  &quot;credential&quot;: [&#xd;
+    {&#xd;
+      &quot;credential_type&quot;: &quot;RUSSIAN_INTERNAL_PASSPORT&quot;,&#xd;
+      &quot;issue_date&quot;: &quot;2017-03-08&quot;,&#xd;
+      &quot;issue_point&quot;: &quot;УФМС РОССИИ ПО ТОМСКОЙ ОБЛАСТИ&quot;,&#xd;
+      &quot;issue_point_code&quot;: &quot;700-002&quot;,&#xd;
+      &quot;number&quot;: &quot;865497&quot;,&#xd;
+      &quot;series&quot;: &quot;6919&quot;&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;address&quot;: [&#xd;
+    {&#xd;
+      &quot;address_query&quot;: &quot;г Томск, ул Говорова, д 62 к 30&quot;,&#xd;
+      &quot;address_type&quot;: &quot;LEGAL_ADDRESS&quot;,&#xd;
+      &quot;region_kladr_id&quot;: &quot;7000000000000&quot;,&#xd;
+      &quot;city_kladr_id&quot;: &quot;7000000100000&quot;&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;address_query&quot;: &quot;г Томск, ул Говорова, д 62 к 30&quot;,&#xd;
+      &quot;address_type&quot;: &quot;ACTUAL_ADDRESS&quot;,&#xd;
+      &quot;region_kladr_id&quot;: &quot;7000000000000&quot;,&#xd;
+      &quot;city_kladr_id&quot;: &quot;7000000100000&quot;&#xd;
+    }&#xd;
+  ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Создание страхователя">
+          <stringProp name="HTTPSampler.domain">partner.agentapp.ru</stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/insured_objects/insurants/natural_persons</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;last_name&quot;: &quot;Гурбановская&quot;,&#xd;
+  &quot;first_name&quot;: &quot;Леся&quot;,&#xd;
+  &quot;patronymic&quot;: &quot;Богдановна&quot;,&#xd;
+  &quot;birth_date&quot;: &quot;1976-06-15&quot;,&#xd;
+  &quot;credential&quot;: [&#xd;
+    {&#xd;
+      &quot;credential_type&quot;: &quot;RUSSIAN_INTERNAL_PASSPORT&quot;,&#xd;
+      &quot;issue_date&quot;: &quot;2019-06-27&quot;,&#xd;
+      &quot;issue_point&quot;: &quot;УФМС РОССИИ ПО ТОМСКОЙ ОБЛАСТИ&quot;,&#xd;
+      &quot;issue_point_code&quot;: &quot;700-002&quot;,&#xd;
+      &quot;number&quot;: &quot;865497&quot;,&#xd;
+      &quot;series&quot;: &quot;6919&quot;&#xd;
+    }&#xd;
+  ],&#xd;
+  &quot;address&quot;: [&#xd;
+    {&#xd;
+      &quot;address_query&quot;: &quot;г Томск, ул Говорова, д 62 к 30&quot;,&#xd;
+      &quot;address_type&quot;: &quot;LEGAL_ADDRESS&quot;,&#xd;
+      &quot;region_kladr_id&quot;: &quot;7000000000000&quot;,&#xd;
+      &quot;city_kladr_id&quot;: &quot;7000000100000&quot;&#xd;
+    },&#xd;
+    {&#xd;
+      &quot;address_query&quot;: &quot;г Томск, ул Говорова, д 62 к 30&quot;,&#xd;
+      &quot;address_type&quot;: &quot;ACTUAL_ADDRESS&quot;,&#xd;
+      &quot;region_kladr_id&quot;: &quot;7000000000000&quot;,&#xd;
+      &quot;city_kladr_id&quot;: &quot;7000000100000&quot;&#xd;
+    }&#xd;
+  ],&#xd;
+   &quot;contact&quot;: [&#xd;
+        {&#xd;
+            &quot;contact_type&quot;: &quot;PHONE&quot;,&#xd;
+            &quot;data&quot;: &quot;+79992061450&quot;&#xd;
+        },&#xd;
+        {&#xd;
+            &quot;contact_type&quot;: &quot;EMAIL&quot;,&#xd;
+            &quot;data&quot;: &quot;natahodyr@yandex.ru&quot;&#xd;
+        }&#xd;
+   ]&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Объект страхования" enabled="false">
+          <stringProp name="HTTPSampler.domain">partner.agentapp.ru</stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/insured_objects/</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+    &quot;drivers&quot;: [&#xd;
+        &quot;2fbf9cc1-d2fc-4103-af47-c1027174763b&quot;&#xd;
+        ],&#xd;
+    &quot;owner&quot;: &quot;5df6ab93-2885-4007-b4d4-206b6cdb610f&quot;,&#xd;
+    &quot;car&quot;: &quot;ef8db422-da2e-4a9a-a5e4-c83e5d103f42&quot;,&#xd;
+    &quot;insurant&quot;: &quot;f62d8e6f-579e-4a60-b257-44a76f7afedc&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Создание договора" enabled="false">
+          <stringProp name="HTTPSampler.domain">partner.agentapp.ru</stringProp>
+          <stringProp name="HTTPSampler.port">443</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.path">/v1/agreements/calculations</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+  &quot;valid_from&quot;: &quot;2023-06-30&quot;,&#xd;
+  &quot;valid_to&quot;: &quot;2024-06-29&quot;,&#xd;
+  &quot;insurance_period&quot;: 8,&#xd;
+  &quot;target_of_using&quot;: 11,&#xd;
+  &quot;drivers_ids&quot;: [&quot;2fbf9cc1-d2fc-4103-af47-c1027174763b&quot;],&#xd;
+  &quot;is_car_without_registration&quot;: false,&#xd;
+  &quot;engine_power&quot;: 110,&#xd;
+  &quot;has_car_trailer&quot;: false,&#xd;
+  &quot;car_type&quot;: &quot;B&quot;,&#xd;
+  &quot;owner_registration&quot;:   {&#xd;
+      &quot;address_query&quot;: &quot;г Томск, ул Говорова, д 62 к 30&quot;,&#xd;
+      &quot;address_type&quot;: &quot;LEGAL_ADDRESS&quot;,&#xd;
+      &quot;region_kladr_id&quot;: &quot;7000000000000&quot;,&#xd;
+      &quot;city_kladr_id&quot;: &quot;7000000100000&quot;&#xd;
+    },&#xd;
+  &quot;periods&quot;: []&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>

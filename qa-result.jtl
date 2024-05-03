@@ -1,0 +1,15 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1714730148723,697,Авторизация,200,OK,Thread Group 1-1,text,true,,531,317,1,1,https://partner.agentapp.ru/v1/users/obtain-token,694,0,551
+1714730149453,120,Создание водителя,201,Created,Thread Group 1-1,text,true,,1019,672,1,1,https://partner.agentapp.ru/v1/insured_objects/drivers,120,0,0
+1714730150203,113,Создание автомобиля,201,Created,Thread Group 1-1,text,true,,1442,643,1,1,https://partner.agentapp.ru/v1/insured_objects/cars,113,0,0
+1714730150954,200,Создание собственника,201,Created,Thread Group 1-1,text,true,,12323,1182,1,1,https://partner.agentapp.ru/v1/insured_objects/owners/natural_persons,200,0,0
+1714730151703,203,Создание страхователя,201,Created,Thread Group 1-1,text,true,,12453,1410,1,1,https://partner.agentapp.ru/v1/insured_objects/insurants/natural_persons,203,0,0
+1714730152454,339,Авторизация,200,OK,Thread Group 1-1,text,true,,531,317,1,1,https://partner.agentapp.ru/v1/users/obtain-token,339,0,0
+1714730153211,93,Создание водителя,201,Created,Thread Group 1-1,text,true,,1019,672,1,1,https://partner.agentapp.ru/v1/insured_objects/drivers,93,0,0
+1714730153953,131,Создание автомобиля,201,Created,Thread Group 1-1,text,true,,1442,643,1,1,https://partner.agentapp.ru/v1/insured_objects/cars,131,0,0
+1714730154704,146,Создание собственника,201,Created,Thread Group 1-1,text,true,,12323,1182,1,1,https://partner.agentapp.ru/v1/insured_objects/owners/natural_persons,146,0,0
+1714730155453,245,Создание страхователя,201,Created,Thread Group 1-1,text,true,,12453,1410,1,1,https://partner.agentapp.ru/v1/insured_objects/insurants/natural_persons,245,0,0
+1714730156203,168,Авторизация,200,OK,Thread Group 1-1,text,true,,531,317,1,1,https://partner.agentapp.ru/v1/users/obtain-token,168,0,0
+1714730156954,102,Создание водителя,201,Created,Thread Group 1-1,text,true,,1019,672,1,1,https://partner.agentapp.ru/v1/insured_objects/drivers,102,0,0
+1714730157703,96,Создание автомобиля,201,Created,Thread Group 1-1,text,true,,1442,643,1,1,https://partner.agentapp.ru/v1/insured_objects/cars,96,0,0
+1714730158454,174,Создание собственника,201,Created,Thread Group 1-1,text,true,,12323,1182,1,1,https://partner.agentapp.ru/v1/insured_objects/owners/natural_persons,174,0,0
